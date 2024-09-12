@@ -9,7 +9,7 @@ def load_pipeline() -> StableDiffusionXLPipeline:
     pipeline = StableDiffusionXLPipeline.from_pretrained(
         "stablediffusionapi/newdream-sdxl-20",
         torch_dtype=torch.float16,
-        local_files_only=True,
+        local_files_only=False,
     ).to("cuda")
 
     pipeline(prompt="")
