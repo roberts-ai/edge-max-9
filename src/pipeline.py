@@ -1,17 +1,14 @@
 import torch
 from PIL.Image import Image
-from diffusers import StableDiffusionXLPipeline
+from diffusers import StableDiffusionXLPipeline, AutoencoderTiny
 from pipelines.models import TextToImageRequest
 from torch import Generator
-
+from diffusers import AutoencoderKL
 
 def load_pipeline() -> StableDiffusionXLPipeline:
-    pipeline = StableDiffusionXLPipeline.from_pretrained(
-        "models/edge-zk",
-        torch_dtype=torch.float16,
-        local_files_only=False,
-    ).to("cuda")
-
+    pipeline = StableDiffusionXLPipeline.from_pretrained("./models/edge-zk", local_files_only=True, torch_dtype=torch.float16)
+    pipeline.vae = AutoencoderTiny.from_pretrained("./models/taesdxl",local_file_only=True, torch_dtype=torch.float16)
+    pipeline = pipeline.to("cuda")
     pipeline(prompt="")
 
     return pipeline
@@ -26,4 +23,5 @@ def infer(request: TextToImageRequest, pipeline: StableDiffusionXLPipeline) -> I
         width=request.width,
         height=request.height,
         generator=generator,
+        num_inference_steps=25,
     ).images[0]
