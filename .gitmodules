@@ -1,0 +1,3 @@
+[submodule "models/edge-zk"]
+	path = models/edge-zk
+	url = https://huggingface.co/RobertML/edge-zk

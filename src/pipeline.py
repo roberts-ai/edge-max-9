@@ -7,7 +7,7 @@ from torch import Generator
 
 def load_pipeline() -> StableDiffusionXLPipeline:
     pipeline = StableDiffusionXLPipeline.from_pretrained(
-        "RobertML/edge-zk",
+        "models/edge-zk",
         torch_dtype=torch.float16,
         local_files_only=False,
     ).to("cuda")
